@@ -25,7 +25,7 @@ S2 = 5
 UDOffset = 150
 
 # this is just the bound box sizes that openCV spits out *shrug*
-faceSizes = [90, 136, 202, 304, 456, 684, 1026]
+faceSizes = [1026, 684, 456, 304, 202, 136, 90]
 tDistance = args.distance
 
 # Frames per second of the pygame window display

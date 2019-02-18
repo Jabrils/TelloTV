@@ -24,11 +24,17 @@ $ pip install -r requirements.txt
                         (default: False)
 ```
 
+## Controls
+Currently the controls often don't respond on the first press, you might have to spam the button. Will look into this bug in the future
+- T: Takeoff
+- L: To Land
+
 ## Roadmap
 - Add a movement gradient dependent on distance from subject
 - Add more to the facial recog to be able to tell when the drone needs to fly left or right
 - Use pose estimation for input commands
 - Add a function where the drone will ignore all faces except the one you specify
+- Fix key pressing spam
 
 # Credits
 This script has been adapted from Damià Fuentes Escoté's [TelloSDKPy](https://github.com/damiafuentes/DJITelloPy) script, please check it out if you want to learn more about that.

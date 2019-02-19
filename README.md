@@ -25,16 +25,30 @@ $ pip install -r requirements.txt
 ```
 
 ## Controls
-Currently the controls often don't respond on the first press, you might have to spam the button. Will look into this bug in the future
+- Esc: Quit Application
+
 - T: Takeoff
 - L: To Land
+- 0: Set Drone distance to 0
+- 1: Set Drone distance to 1
+- 2: Set Drone distance to 2
+- 3: Set Drone distance to 3
+- 4: Set Drone distance to 4
+- 5: Set Drone distance to 5
+- 6: Set Drone distance to 6
+
+#####Override Mode
+- Backspace: Enable / Disable Override mode
+- W/S: Fly Forward/Back
+- A/D: Pan Left/Right
+- Q/E: Fly Up/Down
 
 ## Roadmap
 - Add a movement gradient dependent on distance from subject
 - Add more to the facial recog to be able to tell when the drone needs to fly left or right
 - Use pose estimation for input commands
 - Add a function where the drone will ignore all faces except the one you specify
-- Fix key pressing spam
+- ~~Fix key pressing spam~~
 
 # Credits
 This script has been adapted from Damià Fuentes Escoté's [TelloSDKPy](https://github.com/damiafuentes/DJITelloPy) script, please check it out if you want to learn more about that.

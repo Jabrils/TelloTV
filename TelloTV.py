@@ -12,6 +12,12 @@ parser.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS,
                     help='** = required')
 parser.add_argument('-d', '--distance', type=int, default=3,
     help='use -d to change the distance of the drone. Range 0-6')
+parser.add_argument('-sx', '--saftey_x', type=int, default=100,
+    help='use -sx to change the saftey bound on the x axis . Range 0-480')
+parser.add_argument('-sy', '--saftey_y', type=int, default=55,
+    help='use -sy to change the saftey bound on the y axis . Range 0-360')
+parser.add_argument('-os', '--override_speed', type=int, default=1,
+    help='use -os to change override speed. Range 0-3')
 parser.add_argument('-ss', "--save_session", action='store_true',
     help='add the -ss flag to save your session as an image sequence in the Sessions folder')
 parser.add_argument('-D', "--debug", action='store_true',
@@ -88,9 +94,16 @@ class FrontEnd(object):
         should_stop = False
         imgCount = 0
         OVERRIDE = False
+        oSpeed = args.override_speed
         tDistance = args.distance
         self.tello.get_battery()
+        
+        # Safety Zone X
+        szX = args.saftey_x
 
+        # Safety Zone Y
+        szY = args.saftey_y
+        
         if args.debug:
             print("DEBUG MODE ENABLED!")
 
@@ -116,43 +129,56 @@ class FrontEnd(object):
 
             time.sleep(1 / FPS)
 
-            # 
+            # Listen for key presses
             k = cv2.waitKey(20)
 
             # Press 0 to set distance to 0
             if k == ord('0'):
-                print("Distance = 0")
-                tDistance = 0
+                if not OVERRIDE:
+                    print("Distance = 0")
+                    tDistance = 0
 
             # Press 1 to set distance to 1
             if k == ord('1'):
-                print("Distance = 1")
-                tDistance = 1
+                if OVERRIDE:
+                    oSpeed = 1
+                else:
+                    print("Distance = 1")
+                    tDistance = 1
 
             # Press 2 to set distance to 2
             if k == ord('2'):
-                print("Distance = 2")
-                tDistance = 2
+                if OVERRIDE:
+                    oSpeed = 2
+                else:
+                    print("Distance = 2")
+                    tDistance = 2
                     
             # Press 3 to set distance to 3
             if k == ord('3'):
-                print("Distance = 3")
-                tDistance = 3
+                if OVERRIDE:
+                    oSpeed = 3
+                else:
+                    print("Distance = 3")
+                    tDistance = 3
             
             # Press 4 to set distance to 4
             if k == ord('4'):
-                print("Distance = 4")
-                tDistance = 4
+                if not OVERRIDE:
+                    print("Distance = 4")
+                    tDistance = 4
                     
             # Press 5 to set distance to 5
             if k == ord('5'):
-                print("Distance = 5")
-                tDistance = 5
+                if not OVERRIDE:
+                    print("Distance = 5")
+                    tDistance = 5
                     
             # Press 6 to set distance to 6
             if k == ord('6'):
-                print("Distance = 6")
-                tDistance = 6
+                if not OVERRIDE:
+                    print("Distance = 6")
+                    tDistance = 6
 
             # Press T to take off
             if k == ord('t'):
@@ -179,30 +205,37 @@ class FrontEnd(object):
                     print("OVERRIDE DISABLED")
 
             if OVERRIDE:
-                # Press 6 to set distance to 6
+                # S & W to fly forward & back
                 if k == ord('w'):
-                    self.for_back_velocity = int(S * 2)
+                    self.for_back_velocity = int(S * oSpeed)
                 elif k == ord('s'):
-                    self.for_back_velocity = -int(S * 2)
+                    self.for_back_velocity = -int(S * oSpeed)
                 else:
                     self.for_back_velocity = 0
 
-                # Press 6 to set distance to 6
-                if k == ord('a'):
-                    self.yaw_velocity = int(S * 2)
-                elif k == ord('d'):
-                    self.yaw_velocity = -int(S * 2)
+                # a & d to pan left & right
+                if k == ord('d'):
+                    self.yaw_velocity = int(S * oSpeed)
+                elif k == ord('a'):
+                    self.yaw_velocity = -int(S * oSpeed)
                 else:
                     self.yaw_velocity = 0
 
-                # Press 6 to set distance to 6
-                if k == ord('q'):
-                    self.up_down_velocity = int(S * 2)
-                elif k == ord('e'):
-                    self.up_down_velocity = -int(S * 2)
+                # Q & E to fly up & down
+                if k == ord('e'):
+                    self.up_down_velocity = int(S * oSpeed)
+                elif k == ord('q'):
+                    self.up_down_velocity = -int(S * oSpeed)
                 else:
                     self.up_down_velocity = 0
 
+                # c & z to fly left & right
+                if k == ord('c'):
+                    self.left_right_velocity = int(S * oSpeed)
+                elif k == ord('z'):
+                    self.left_right_velocity = -int(S * oSpeed)
+                else:
+                    self.left_right_velocity = 0
 
             # Quit the software
             if k == 27:
@@ -246,12 +279,6 @@ class FrontEnd(object):
                     vTrue = np.array((cWidth,cHeight,tSize))
                     vTarget = np.array((targ_cord_x,targ_cord_y,end_size))
                     vDistance = vTrue-vTarget
-
-                    # Safety Zone X
-                    szX = 100
-
-                    # Safety Zone Y
-                    szY = 55
 
                     # 
                     if not args.debug:
@@ -310,9 +337,10 @@ class FrontEnd(object):
             dCol = lerp(np.array((0,0,255)),np.array((255,255,255)),tDistance+1/7)
 
             if OVERRIDE:
-                show = "OVERRIDE"
+                show = "OVERRIDE: {}".format(oSpeed)
+                dCol = (255,255,255)
             else:
-                show = str(tDistance)
+                show = "AI: {}".format(str(tDistance))
 
             # Draw the distance choosen
             cv2.putText(frameRet,show,(32,664),cv2.FONT_HERSHEY_SIMPLEX,1,dCol,2)

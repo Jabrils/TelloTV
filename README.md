@@ -4,7 +4,7 @@ TelloTV is a rather simplistic approach to be able to launch your Tello drone & 
 Tested with Python 3.6, but it also may be compatabile with other versions.
 
 ## Example
-https://youtu.be/4B-Kx61SOKA
+https://youtu.be/esw88_gKOpA
 
 ## Install
 ```
@@ -58,9 +58,10 @@ $ pip install -r requirements.txt
 - 3: Set Drone speed to 3
 
 ## Research Notes
-- 02.19.019 - This has been tested outside, & it appears that there is too much happening in most outdoor public spaces. Seeing as the Tello has no internal storage & needs to send each video frame to a computer via WiFi, the image data can become corrupted, making faces unrecognizable for OpenCV to process from, thus reducing the accuracy of the algorithm. In addition, the Tello is rather light, so if there is a lot of wind, it will be difficult to sit still, & in cases where it can, it may be slightly tilted, again making faces hard for the OpenCV algorithm to detect. 
+- 02.19.019 - This has been tested outside, & it appears that there is too much happening in most outdoor public spaces. Seeing as the Tello has no internal storage & needs to send each video frame to a computer via WiFi, many things can go wrong in the process, but from what I observed the biggest issues appear to be: The Computer to Tello communication can be met with WiFi interference, delivering data at an unsustainable rate. The image data can become corrupted, making faces unrecognizable for OpenCV to process from, thus reducing the accuracy of the algorithm. In addition, the Tello is rather light, so if there is a lot of wind, it will be difficult to sit still, & in cases where it can, it may be slightly tilted, again making faces hard for the OpenCV algorithm to detect. 
 
 ## Roadmap
+- Figure out a way to save images at a frame rate from 24-60, or at least 12 fps
 - Display current battery power on screen
 - Add a movement gradient dependent on distance from subject
 - Add more to the facial recog to be able to tell when the drone needs to fly left or right

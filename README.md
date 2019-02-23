@@ -1,5 +1,5 @@
 # TelloTV
-TelloTV is a rather simplistic approach to be able to launch your Tello drone & hav it track your face. This approach has been tested & proven to work with the DJI Tello Drone (Non - Educational Version I believe, but may still work with the educational version?)
+TelloTV is a rather simplistic approach to be able to launch your Tello drone & have it track your face. This approach has been tested & proven to work with the DJI Tello Drone (Non - Educational Version I believe, but may still work with the educational version?)
 
 Tested with Python 3.6, but it also may be compatabile with other versions.
 

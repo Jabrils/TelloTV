@@ -1,7 +1,7 @@
 # TelloTV
 TelloTV is a rather simplistic approach to be able to launch your Tello drone & hav it track your face. This approach has been tested & proven to work with the DJI Tello Drone (Non - Educational Version I believe, but may still work with the educational version?)
 
-Tested with Python 3.6, but it also may be compatabile with other versions.
+Tested with Python 3.6, but it also may be compatible with other versions.
 
 ## Example
 https://youtu.be/esw88_gKOpA
@@ -18,10 +18,10 @@ $ pip install -r requirements.txt
                         use -d to change the distance of the drone. Range 0-6
                         (default: 3)
   -sx SAFTEY_X, --saftey_x SAFTEY_X
-                        use -sx to change the saftey bound on the x axis .
+                        use -sx to change the safety bound on the x axis .
                         Range 0-480 (default: 100)
   -sy SAFTEY_Y, --saftey_y SAFTEY_Y
-                        use -sy to change the saftey bound on the y axis .
+                        use -sy to change the safety bound on the y axis .
                         Range 0-360 (default: 55)
   -os OVERRIDE_SPEED, --override_speed OVERRIDE_SPEED
                         use -os to change override speed. Range 0-3 (default:
@@ -77,3 +77,4 @@ This script has been adapted from Damià Fuentes Escoté's [TelloSDKPy](https://
 
 #### Backend Thanks
 - **Damià Fuentes Escoté** 
+
